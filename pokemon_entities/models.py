@@ -23,7 +23,8 @@ class Pokemon(models.Model):
         blank=True,
         null=True,
     )
-    text = models.TextField("Описание покемона",
+    text = models.TextField(
+        "Описание покемона",
         blank=True,
         null=True
     )
