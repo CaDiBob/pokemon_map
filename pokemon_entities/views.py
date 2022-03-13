@@ -1,5 +1,4 @@
 import folium
-import json
 
 from .models import Pokemon, PokemonEntity
 from django.http import HttpResponseNotFound
@@ -8,9 +7,9 @@ from django.shortcuts import render
 
 MOSCOW_CENTER = [55.751244, 37.618423]
 DEFAULT_IMAGE_URL = (
-    'https://vignette.wikia.nocookie.net/pokemon/images/6/6e/%21.png/revision'
-    '/latest/fixed-aspect-ratio-down/width/240/height/240?cb=20130525215832'
-    '&fill=transparent'
+    "https://vignette.wikia.nocookie.net/pokemon/images/6/6e/%21.png/revision"
+    "/latest/fixed-aspect-ratio-down/width/240/height/240?cb=20130525215832"
+    "&fill=transparent"
 )
 
 
@@ -39,14 +38,14 @@ def show_all_pokemons(request):
     pokemons_on_page = []
     for pokemon in pokemons:
         pokemons_on_page.append({
-            'pokemon_id': pokemon.id,
-            'img_url': pokemon.image.url,
-            'title_ru': pokemon.title,
+            "pokemon_id": pokemon.id,
+            "img_url": pokemon.image.url,
+            "title_ru": pokemon.title,
         })
 
-    return render(request, 'mainpage.html', context={
-        'map': folium_map._repr_html_(),
-        'pokemons': pokemons_on_page,
+    return render(request, "mainpage.html", context={
+        "map": folium_map._repr_html_(),
+        "pokemons": pokemons_on_page,
     })
 
 
@@ -61,29 +60,29 @@ def show_pokemon(request, pokemon_id):
         )
 
     pokemon_features = {
-        'pokemon_id': int(pokemon_id),
-        'title_ru': pokemon.title, 
-        'img_url': pokemon.image.url,
-        'description': pokemon.text,
-        'title_en': pokemon.title_en,
-        'title_jp': pokemon.title_jp,
+        "pokemon_id": int(pokemon_id),
+        "title_ru": pokemon.title,
+        "img_url": pokemon.image.url,
+        "description": pokemon.text,
+        "title_en": pokemon.title_en,
+        "title_jp": pokemon.title_jp,
     } 
 
     if not pokemon.previous_evolution is None:
-        pokemon_features['previous_evolution'] = {
-            'title_ru': pokemon.previous_evolution.title,
-            'pokemon_id': pokemon.previous_evolution.id,
-            'img_url': pokemon.previous_evolution.image.url,
+        pokemon_features["previous_evolution"] = {
+            "title_ru": pokemon.previous_evolution.title,
+            "pokemon_id": pokemon.previous_evolution.id,
+            "img_url": pokemon.previous_evolution.image.url,
         } 
 
     if pokemon.next_evolution.first():
-        pokemon_features['next_evolution'] = {
-            'title_ru': pokemon.next_evolution.first().title,
-            'pokemon_id': pokemon.next_evolution.first().id,
-            'img_url': pokemon.next_evolution.first().image.url,
+        pokemon_features["next_evolution"] = {
+            "title_ru": pokemon.next_evolution.first().title,
+            "pokemon_id": pokemon.next_evolution.first().id,
+            "img_url": pokemon.next_evolution.first().image.url,
         }
 
-    return render(request, 'pokemon.html', context={
-        'map': folium_map._repr_html_(),
-        'pokemon': pokemon_features,
+    return render(request, "pokemon.html", context={
+        "map": folium_map._repr_html_(),
+        "pokemon": pokemon_features,
     })
