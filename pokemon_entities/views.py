@@ -76,13 +76,14 @@ def show_pokemon(request, pokemon_id):
             'img_url': pokemon.previous_evolution.image.url,
         } 
 
-    if pokemon.pokemon_set.first():
+    if pokemon.next_evolution.first():
         pokemon_features['next_evolution'] = {
-            'title_ru': pokemon.pokemon_set.first().title,
-            'pokemon_id': pokemon.pokemon_set.first().id,
-            'img_url': pokemon.pokemon_set.first().image.url,
+            'title_ru': pokemon.next_evolution.first().title,
+            'pokemon_id': pokemon.next_evolution.first().id,
+            'img_url': pokemon.next_evolution.first().image.url,
         }
 
     return render(request, 'pokemon.html', context={
-        'map': folium_map._repr_html_(), 'pokemon': pokemon_features
+        'map': folium_map._repr_html_(),
+        'pokemon': pokemon_features,
     })
